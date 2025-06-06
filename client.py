@@ -3,7 +3,7 @@ import os
 import json
 import time
 
-SERVER_HOST_DEFAULT = '172.20.195.74'
+SERVER_HOST_DEFAULT = '127.0.0.1'
 
 
 def send_request(host, port, request_data_bytes):
@@ -152,32 +152,13 @@ if __name__ == "__main__":
     # server_to_test = ("Process Pool Server", SERVER_HOST_DEFAULT, 8889)
 
 
-    SERVER_ROOT_TEST_FILE_URL_PATH = "/test_server_root_file.txt"
+    server_name, server_host, server_port = server_to_test
+    print(f"\n\n{'='*15} MENGUJI SERVER: {server_name} di {server_host}:{server_port} {'='*15}")
+    
+    list_directory(server_host, server_port, "/")
+    
+    upload_file(server_host, server_port, "donalbebek.jpg")
 
-    for server_name, server_host, server_port in server_to_test:
-        print(f"\n\n{'='*15} MENGUJI SERVER: {server_name} di {server_host}:{server_port} {'='*15}")
-        
-        list_directory(server_host, server_port, "/")
-        
-        upload_file(server_host, server_port, "donalbebek.jpg")
-
-
-        # # 5. LISTDIR direktori upload server lagi untuk melihat file baru
-        # list_directory(server_host, server_port, f"/{REMOTE_UPLOAD_DIR_NAME}")
-
-        # # 6. DELETE file yang baru diunggah dari server
-        # delete_file(server_host, server_port, uploaded_file_url_path)
-        
-        # # 7. LISTDIR direktori upload server sekali lagi untuk konfirmasi penghapusan
-        # list_directory(server_host, server_port, f"/{REMOTE_UPLOAD_DIR_NAME}")
-
-        # # 8. GET file dari root direktori server (jika ada)
-        # #    File ini (SERVER_ROOT_TEST_FILE_URL_PATH) seharusnya dibuat oleh blok __main__ di http.py
-        # get_file(server_host, server_port, SERVER_ROOT_TEST_FILE_URL_PATH)
-        
-        # # 9. DELETE file dari root direktori server
-        # #    Hati-hati saat menghapus file dari root, pastikan itu file tes.
-        # delete_file(server_host, server_port, SERVER_ROOT_TEST_FILE_URL_PATH)
-        # list_directory(server_host, server_port, "/") # Cek root lagi setelah delete
+    list_directory(server_host, server_port, "/")
 
     print("\nPengujian operasi klien selesai.")
