@@ -3,7 +3,7 @@ import os
 import json
 import time
 
-SERVER_HOST_DEFAULT = '127.0.0.1'
+SERVER_HOST_DEFAULT = '172.20.195.74'
 
 
 def send_request(host, port, request_data_bytes):
@@ -14,11 +14,7 @@ def send_request(host, port, request_data_bytes):
             s.sendall(request_data_bytes)
             s.shutdown(socket.SHUT_WR)
 
-            while True:
-                chunk = s.recv(4096)
-                if not chunk:
-                    break
-                response_bytes += chunk
+            response_bytes = s.recv(4096)
 
     except ConnectionRefusedError:
         print(f"KONEKSI DITOLAK: Tidak dapat terhubung ke {host}:{port}. Apakah server berjalan?")
@@ -146,10 +142,10 @@ def get_file(host, port, remote_file_url_path):
 
 if __name__ == "__main__":
     # Server Thread Pool
-    server_to_test = ("Thread Pool Server", SERVER_HOST_DEFAULT, 8885) 
+    # server_to_test = ("Thread Pool Server", SERVER_HOST_DEFAULT, 8885) 
 
     # Server Process Pool
-    # server_to_test = ("Process Pool Server", SERVER_HOST_DEFAULT, 8889)
+    server_to_test = ("Process Pool Server", SERVER_HOST_DEFAULT, 8889)
 
 
     server_name, server_host, server_port = server_to_test
@@ -157,8 +153,10 @@ if __name__ == "__main__":
     
     list_directory(server_host, server_port, "/")
     
-    upload_file(server_host, server_port, "donalbebek.jpg")
+    # upload_file(server_host, server_port, "donalbebek.jpg")
 
-    list_directory(server_host, server_port, "/")
+    # list_directory(server_host, server_port, "/")
+
+    # delete_file(server_host, server_port, "/donalbebek.jpg")
 
     print("\nPengujian operasi klien selesai.")

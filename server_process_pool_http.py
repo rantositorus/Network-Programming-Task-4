@@ -6,7 +6,7 @@ from http import HttpServer
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - [%(threadName)s] - %(message)s',
+    format='%(asctime)s - %(levelname)s - [%(processName)s] - %(message)s',
 )
 
 httpserver = HttpServer()
@@ -91,7 +91,7 @@ def Server():
 
     logging.info("Server HTTP Process Pool berjalan di port 8889...")  
     
-    with ProcessPoolExecutor(max_workers=20, thread_name_prefix = "ClientHandler") as executor:
+    with ProcessPoolExecutor(max_workers=20) as executor:
         while True:
                 connection, client_address = my_socket.accept()
                 p = executor.submit(ProcessTheClient, connection, client_address)
